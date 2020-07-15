@@ -2,7 +2,7 @@
 require("dotenv").config();
 const Sequelize = require("sequelize");
 
-/* local
+/* local 
 const sequelize = new Sequelize("database", "username", "password", {
 	host: "localhost",
 	dialect: "sqlite",
@@ -17,7 +17,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 	port:     process.env.PORT,
 	host:     process.env.HOST,
 	logging:   false
-}); 
+});
 
 const StockMarket = require("../database/models/stock_market")(sequelize, Sequelize.DataTypes);
 require("../database/models/users")(sequelize, Sequelize.DataTypes);
