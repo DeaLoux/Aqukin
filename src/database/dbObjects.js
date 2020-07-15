@@ -11,7 +11,7 @@ const sequelize = new Sequelize("database", "username", "password", {
 }); */
 
 /* server */
-const sequelize = new Sequelize(process.env.HEROKU_POSTGRESQL_BRONZE_URL, {
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
 	dialect:  "postgres",
 	protocol: "postgres",
 	port:     process.env.PORT,
