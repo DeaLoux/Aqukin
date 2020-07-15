@@ -2,7 +2,7 @@
 require("dotenv").config();
 const Sequelize = require("sequelize");
 
-/* local
+/* local 
 const sequelize = new Sequelize("database", "username", "password", {
 	host: "localhost",
 	dialect: "sqlite",
@@ -19,10 +19,10 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 	logging:   false
 }); 
 
-const Users = sequelize.import("../database/models/users");
-const Guilds = sequelize.import("../database/models/guilds");
-const StockMarket = sequelize.import("../database/models/stock_market");
-const UserStocks = sequelize.import("../database/models/user_stocks");
+const Users = require("../database/models/users")(sequelize, Sequelize.DataTypes);
+const Guilds = require("../database/models/guilds")(sequelize, Sequelize.DataTypes);
+const StockMarket = require("../database/models/stock_market")(sequelize, Sequelize.DataTypes);
+const UserStocks = require("../database/models/user_stocks")(sequelize, Sequelize.DataTypes);
 
 UserStocks.belongsTo(StockMarket, { foreignKey: "stock_id", as: "stock" });
 

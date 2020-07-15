@@ -19,10 +19,10 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 	logging:   false
 }); 
 
-const StockMarket = sequelize.import("../database/models/stock_market");
-sequelize.import("../database/models/users");
-sequelize.import("../database/models/guilds");
-sequelize.import("../database/models/user_stocks");
+const StockMarket = require("../database/models/stock_market")(sequelize, Sequelize.DataTypes);
+require("../database/models/users")(sequelize, Sequelize.DataTypes);
+require("../database/models/guilds")(sequelize, Sequelize.DataTypes);
+require("../database/models/user_stocks")(sequelize, Sequelize.DataTypes);
 
 const force = process.argv.includes("--force") || process.argv.includes("-f"); // force sync
 

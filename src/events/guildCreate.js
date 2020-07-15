@@ -16,8 +16,8 @@ module.exports = class GuildCreateEvent extends BaseEvent {
                             For the list of **commands**, try \`${newGuild.prefix}help\`.\n
                             You can always change the **current prefix** with the command \`configureprefix\` or \`cp\` for short.\n
                             You can also **mention ${name}** for **commands** instead of using the prefix, for example \`@${name} h\` should give you the list of commands.\n
-                            For a more detailed guide, please have a look at the [Manual](https://www.youtube.com/watch?v=-aB6MQU8l1s).\n
-                            If you need more help or considering support, join us at the [${name} Official Server](https://www.youtube.com/watch?v=-aB6MQU8l1s).`;
+                            For a more detailed guide, please prefer to [README](https://github.com/DeaLoux/Aqukin#readme).\n
+                            If you need more help or considering support, join us at the [Onion Squad](https://www.youtube.com/watch?v=-aB6MQU8l1s).`;
         const embed = new MessageEmbed()
             .setColor(0x1DE2FE)
             .setThumbnail("https://media1.tenor.com/images/6833382be660b108e6947fe3f6f7ad4b/tenor.gif?itemid=16161314")
@@ -28,10 +28,11 @@ module.exports = class GuildCreateEvent extends BaseEvent {
             .setFooter("Vive La Résistance le Hololive ٩(｡•ω•｡*)و");
 
         try{
-            const channel = await guild.channels.create(`${bot.user.username} manual`, { 
+            const channel = await guild.channels.create(`Haachama's cooking`, { 
                 reason: `User guide channel`,
             });
-            channel.send(`Dear masters of **${guild.name}**`, embed);
+            await channel.send(`Dear masters of **${guild.name}**`, embed);
+            console.log(`Added to -> ${guild.name}`);
         }
         catch(err) { console.log(err); }
     } // end of run

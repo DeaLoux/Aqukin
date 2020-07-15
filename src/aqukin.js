@@ -10,7 +10,10 @@ const bot = new Client();
 bot.commands = new Collection(); // bot commands
 bot.media = {
 	gifs: [],
-	thumbnails: []
+	thumbnails: [],
+	baquafina: [],
+	bakaqua: [],
+	dogeza: [],
 };
 bot.mentionCmd = {
 	tag: process.env.TAG,

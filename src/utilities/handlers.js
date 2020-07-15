@@ -60,10 +60,31 @@ async function registerMediaFiles(bot, dir = ""){
                 });
             }
             
-            if(file.startsWith("gifs")){
+            else if(file.startsWith("gifs")){
                 await lineReader.eachLine(`${filePath}/${file}`, async function(line) {
                     if(line.length === 0) { return; }
                     await bot.media.gifs.push(line);
+                });
+            }
+
+            else if(file.startsWith("baquafina")){
+                await lineReader.eachLine(`${filePath}/${file}`, async function(line) {
+                    if(line.length === 0) { return; }
+                    await bot.media.baquafina.push(line);
+                });
+            }
+
+            else if(file.startsWith("bakaqua")){
+                await lineReader.eachLine(`${filePath}/${file}`, async function(line) {
+                    if(line.length === 0) { return; }
+                    await bot.media.bakaqua.push(line);
+                });
+            }
+
+            else if(file.startsWith("dogeza")){
+                await lineReader.eachLine(`${filePath}/${file}`, async function(line) {
+                    if(line.length === 0) { return; }
+                    await bot.media.dogeza.push(line);
                 });
             }
         } // end of if the file is a .txt file 
