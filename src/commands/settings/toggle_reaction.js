@@ -2,16 +2,21 @@
 const BaseCommand = require("../../utilities/structures/BaseCommand");
 
 module.exports = class ToggleReactionCommand extends BaseCommand{
-    constructor() {super("togglereaction", ["tr", "reaction"], "Toggle enabling/disabling the reaction module", "ADMINISTRATOR", "settings", false, "", "-- will enable/disable Aqukin's ability to react")}
+    constructor() {super("togglereact", ["tr", "react"], "Toggle enabling/disabling the reaction module", "ADMINISTRATOR", "settings", false, "", "-- will enable/disable Aqukin's ability to react to messages")}
     
     async run(para){
         // shortcut variables
         const { message, bot } = para;
 
-        bot.settings.enablereaction = !bot.settings.enablereaction;
+        const emojiList = Array.from(message.guild.emojis.cache.map(e => e.id.toString()));
+        if(emojiList.length === 0){
+            return message.channel.send(`**${message.author.username}**-sama, you need to have custom emojis so ${bot.user.username} can react (； ￣Д￣)`);
+        }
+
+        const settings = await bot.settings.toggleReact(message.guild.id);
 
         let reply = "";
-        if(!bot.settings.reaction){ reply += `${bot.user.username} has disabled the reaction module (* ￣ ▽ ￣) b`; }
+        if(!settings.react){ reply += `${bot.user.username} has disabled the reaction module (* ￣ ▽ ￣) b`; }
         else{ reply += `${bot.user.username} will now enable the reaction module (ﾉ ◕ ヮ ◕) ﾉ *: ･ ﾟ ✧`; }
         message.channel.send(`**${message.author.username}**-sama, ${reply}`);
     } // end of run

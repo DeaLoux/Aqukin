@@ -16,8 +16,8 @@ module.exports = class UsernfoCommand extends BaseCommand{
         }
         else{ user = message.mentions.users.first() || message.author; } 
 
-        // checks if the user has tagged Aqukin
-        if(user.id === "702620458130079750"){
+        // checks if the user has tagged the bot
+        if(user.id === bot.user.id){
             const aquaCh = "https://www.youtube.com/channel/UC1opHUrw8rvnsadT-iGp7Cg";
             const aquaTw = "https://twitter.com/minatoaqua";
             const aThumbnails = ["https://media1.tenor.com/images/6ea2ecbe506ba7a51bc4a83bd5f16ae7/tenor.gif?itemid=17126194", 
@@ -27,12 +27,12 @@ module.exports = class UsernfoCommand extends BaseCommand{
                 .setThumbnail(aThumbnails[Math.floor(Math.random() * Math.floor(aThumbnails.length))])
                 .setTitle(`⚓ ${user.username} information (⁄ ⁄> ⁄ ▽ ⁄ <⁄ ⁄) ⚓`)
                 .addFields({ name: "Nickname", value: "Baqua\nOnion\nIQ-3", inline: true },
-                           { name: "Version", value: `${process.env.VER}`, inline: true },
-                           { name: "Date Created", value: user.createdAt.toLocaleDateString(), inline: true }, 
+                           { name: "Minato Aqua Channel", value: `[Aqua Ch. 湊あくあ](${aquaCh})`, inline: true },
+                           { name: "Minato Aqua Twitter", value: `[@minatoaqua](${aquaTw})`, inline: true },
                            { name: "Aliases (`･ω･´)", value: "Go-Sai\nDai Tenshi\nSeigi no Mikata\nDiamond Ninja Combat Maid\nLeader of the Hololive Resistance" },
                            { name: "Description", value: `${process.env.DESC}` },
-                           { name: "Minato Aqua Channel", value: `[Aqua Ch. 湊あくあ](${aquaCh})`, inline: true },
-                           { name: "Minato Aqua Twitter", value: `[@minatoaqua](${aquaTw})`, inline: true },)
+                           { name: "Version", value: `${process.env.VER}`, inline: true },
+                           { name: "Date Created", value: user.createdAt.toLocaleDateString(), inline: true }, )
                            //{ name: "Author", value: `${bot.creator.tag}`, inline: true })
                 .setImage("https://media1.tenor.com/images/8bb13d9fa4311f314a2d419c9d2d6c37/tenor.gif?itemid=16917426")
                 .setFooter("Vive La Résistance le Hololive ٩(｡•ω•｡*)و");
@@ -42,21 +42,20 @@ module.exports = class UsernfoCommand extends BaseCommand{
         // if not continue with the code
         const member = message.guild.member(user); // get the mention user via the guild member list
         // checks if the member is in the guild, if not return a message to inform the author
-        if (!member) { return message.channel.send(`**${message.author.username}**-sama, it looks like the person you mentioned isn't in this guild (； ￣Д￣)`, para.ridingAqua);}
+        if (!member) { return message.channel.send(`**${message.author.username}**-sama, it looks like the person you mentioned isn't in this guild (； ￣Д￣)`, para.ridingAqua); }
         
         // get the mention user role(s) in the guild
         const memberRoles = member.roles.cache
             .filter(role => role.name !== "@everyone")
-            .map(role => `\`${role.name}\``).join(" "); 
+            .map(role => `\`${role.name}\``).join(" ") || "None"; 
         let title;
         // checks if the author has tagged themselve
         if(member.id === message.author.id) { title = "Your"; }
         else { title = `**${member.displayName}**-sama`; }
-        // checks if the tagged user has a nickname
-        let nickname;
-        if(member.nickname) { nickname = member.nickname; }
-        else { nickname = "None"; } // if not display "None" instead of "null"
+        // get the user nickname
+        const nickname = member.nickname || "None";
         
+        // construct the embed
         const { gifs } = bot.media;
         const embed = new MessageEmbed()
             .setColor(0x1DE2FE)
@@ -70,6 +69,6 @@ module.exports = class UsernfoCommand extends BaseCommand{
             //.setImage(member.user.displayAvatarURL({format: "png", dynamic: true, size: 2048}))
             .setImage(gifs[Math.floor(Math.random() * Math.floor(gifs.length))])
             .setFooter("Vive La Résistance le Hololive ٩(｡•ω•｡*)و");
-        message.channel.send(`**${message.author.username}**-sama, this is`, embed)
+        message.channel.send(`**${message.author.username}**-sama, this is`, embed);
     } // end of run
 }; // end of module.exports

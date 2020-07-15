@@ -64,7 +64,7 @@ async function ytNotify(para){
             const { data } = response;
             
             if(data.items.length === 0){
-                return message.channel.send(`**${author}**-sama, **${chSearchR.snippet.title}** is not live nor having any upcoming stream right now (｡ • ́︿ • ̀｡)`);
+                return message.channel.send(`**${author}**-sama, \`${chSearchR.snippet.title}\` is not live nor having any upcoming stream right now (｡ • ́︿ • ̀｡)`);
             }
             
             data.items.forEach((video) => {

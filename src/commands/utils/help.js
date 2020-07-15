@@ -51,7 +51,7 @@ module.exports = class HelpCommand extends BaseCommand{
             const helpEmbed = new MessageEmbed()
                 .setColor(0x1DE2FE)
                 .setThumbnail(thumbnails[Math.floor(Math.random() * Math.floor(thumbnails.length))])
-                .setTitle(`You can send \`${para.prefix}help [command name]\` to get info on a specific command ☆ ⌒ (≧ ▽ °)`)
+                .setTitle(`You can try \`${para.prefix}help [command name]\` to get info on a specific command ☆ ⌒ (≧ ▽ °)`)
                 .addFields({ name: "Current Prefix", value: `\`${para.prefix}\`` }, 
                            { name: "Music commands", value: musicCmds }, 
                            { name: "Ultility commands", value: utilsCmds },

@@ -4,7 +4,7 @@ const { convertInput, formatLength } = require("../../utilities/functions");
 
 module.exports = class MoveCommand extends BaseCommand{
     constructor() {
-        super("move", ["m", "to", "time"], "Move the audio player to a specified timestamp in the current track by its requester/admin", "CONNECT", "music", true, "<hh:mm:ss>", "02:32 or 2:32 or 0:2:32 or 1:92 or 152 -- will all move the current track to the position 2 minutes & 32 seconds");
+        super("move", ["m", "to", "time"], "Move the audio player to a specified timestamp in the current track by its requester/admin", "CONNECT", "music", true, "<hh:mm:ss>", "02:32 (or 2:32 or 0:2:32 or 1:92 or 152) -- will all move the current track to the position of **2 minutes and 32 seconds**");
     }
     
     async run(para){
@@ -20,7 +20,8 @@ module.exports = class MoveCommand extends BaseCommand{
         const timestamp = await convertInput(para.args[0]);
 
         // checks if the author has requested to move to a valid timestamp, if so continue, if not return a message to inform them
-        if(convertInput(para.args[0]) > player.queue[0].duration) { return message.channel.send(`**${author.username}**-sama, the timestamp should be less than the track length \`${formatLength(player.queue[0].duration)}\` ლ (¯ ロ ¯ "ლ)`); }
+        if(timestamp >= player.queue[0].duration) { return message.channel.send(`**${author.username}**-sama, the timestamp should be less than the track length \`${formatLength(player.queue[0].duration)}\` ლ (¯ ロ ¯ "ლ)`); }
+        console.log(timestamp, player.queue[0].duration);
         
         // try to move to the given timestamp, inform the author if fail
         try{

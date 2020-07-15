@@ -2,7 +2,7 @@
 const BaseEvent = require("../utilities/structures/BaseEvent");
 
 module.exports = class GuildMemberAddEvent extends BaseEvent {
-    constructor() {super("guildMemberAdd");}
+    constructor() { super("guildMemberAdd"); }
     
     async run(bot, member){
         const channel = await member.guild.channels.cache.find(channel => channel.id === "623712955845836842");

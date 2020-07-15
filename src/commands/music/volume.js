@@ -19,8 +19,9 @@ module.exports = class VolumeCommand extends BaseCommand{
         
         // set the volume
         player.volume = num/100;
-        await player.connection.dispatcher.setVolume(num/100);
-        channel.send(`**${author.username}**-sama, ${para.bot.user.username} has set the volume to \`${player.connection.dispatcher.volume*100}\``); // inform the author
+        //console.log(player.volume);
+        await player.connection.dispatcher.setVolume(player.volume);
+        channel.send(`**${author.username}**-sama, ${para.bot.user.username} has set the volume to \`${Math.floor(player.connection.dispatcher.volume*100)}\``); // inform the author
         
         /* Update the currently playing embed */
         const embed = await musicEmbed(para.bot, player, player.queue[0])

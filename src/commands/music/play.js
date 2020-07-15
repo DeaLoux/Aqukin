@@ -48,11 +48,14 @@ module.exports = class PlayCommand extends BaseCommand{
                     title: trackInfo.player_response.videoDetails.title,
                     duration: trackInfo.player_response.videoDetails.lengthSeconds,
                     requester: message.author,
+                    //live: trackInfo.player_response.videoDetails.isLiveContent,
                 };
                 //console.log(track);
                 await player.queue.push(track);
                 channel.send(`**${author.username}**-sama, ${bot.user.username} has enqueued track **${track.title}** ٩(ˊᗜˋ*)و`);
-            });    
+            }).catch((err) => {
+                noResult = true;
+                message.channel.send(`**${author.username}**-sama, the video is either unvailable or does not exist 〣 (ºΔº) 〣`)});   
         }
         // if the queury is a youtube playlist link
         else if (ytpl.validateURL(query)){
@@ -65,6 +68,7 @@ module.exports = class PlayCommand extends BaseCommand{
                         duration: await convertInput(trackInfo.duration),
                         requester: message.author,
                     }
+                    //console.log(trackInfo);
                     await player.queue.push(track);
                 });
                 await channel.send(`**${author.username}**-sama, ${bot.user.username} has enqueued \`${playlist.total_items}\` track(s) from the playlist **${playlist.title}** ٩(ˊᗜˋ*)و`);
@@ -77,8 +81,7 @@ module.exports = class PlayCommand extends BaseCommand{
         else{
             await ytsr(query, { limit:5 }).then(async results => {
                 const tracks = results.items.filter(i => i.type === "video");
-
-                if(!tracks) {
+                if(tracks.length === 0) {
                     noResult = true;
                     channel.send(`**${author.username}**-sama, ${bot.user.username} can't find any tracks with the given keywords (｡T ω T｡)`, para.ridingAqua);
                     return; 
@@ -107,13 +110,16 @@ module.exports = class PlayCommand extends BaseCommand{
                         title: trackInfo.title,
                         duration: await convertInput(trackInfo.duration),
                         requester: message.author,
+                        //live: trackInfo.live,
                     }
+                    //console.log(trackInfo, track);
                     await player.queue.push(track);
                     response.first().delete(); // delete the user respond
                     message.channel.send(`**${author.username}**-sama, ${bot.user.username} has enqueued track **${tracks[entry-1].title}** ٩(ˊᗜˋ*)و`); // inform the author
-                } catch(err) {
-                    noResult = true;
+                }
+                catch(err) {
                     console.log(err);
+                    noResult = true;
                 }
                 sentMessage.delete(); // delete the search results embed 
             })
@@ -124,11 +130,18 @@ module.exports = class PlayCommand extends BaseCommand{
         } // end of else the given is keyword
 
         // terminate the code if no results are found
-        if(noResult) { return; }
+        if(noResult){
+            if(player.queue.length ===0){
+                await player.connection.disconnect();
+                await bot.music.delete(player.id);
+            }
+            return;
+        }
 
         try {
             if(!player.connection.dispatcher) { await playing(bot, player); }
         } catch (err) {
+            message.channel.send(`**${author.username}**-sama, the video is either unvailable or does not exist 〣 (ºΔº) 〣`);   
             console.log(err);
             bot.music.delete(message.guild.id);
         }
@@ -197,7 +210,12 @@ async function playing(bot, player){
     const dispatcher = player.connection
         .play(ytdl(track.url, ytdlOptions), dispatcherOptions)
         
-        .on("error", console.error)
+        .on("error", async () =>{
+            console.error;
+            await player.textChannel.send(`**${player.queue[0].requester.username}**-sama, an error has occured when ${bot.user.username} was trying to play track **${track.title}** 	。 ゜ ゜ (´Ｏ\`) ゜ ゜。`);
+            await player.queue.shift();
+            await playing(bot, player);
+        })
 
         .on("start", async () =>{
             // now playing embed constructing and sending
@@ -211,7 +229,7 @@ async function playing(bot, player){
             try{ await player.sentMessage.delete(); }
             catch(err) { console.log("The message has already been manually deleted"); }; // try catch in case the message got deleted manually
 
-            const members = player.connection.channel.members.filter(m => !m.user.bot);
+            const members = await player.connection.channel.members.filter(m => !m.user.bot);
             if(members.size === 0){
                 try{
                     await player.connection.disconnect(); 

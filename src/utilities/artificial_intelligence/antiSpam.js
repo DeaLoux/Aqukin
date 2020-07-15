@@ -3,9 +3,9 @@ const ms = require("ms");
 
 // This function checks for spam, very basic and will be updated
 async function antiSpam(bot, message){
-    const { msgThreshhold, warned, msgRecently, msgCount, muteTime, muted } = bot.antispam;
+    const { msgThreshhold, warned, msgRecently, msgCount, muteTime, muted } = await bot.antispam.get(message.guild.id);
 
-    //if(message.member.hasPermission("ADMINISTRATOR")) { return; } // exclude spam check for admins
+    if(message.member.hasPermission("ADMINISTRATOR")) { return; } // exclude spam check for admins
     
     // checks if the user has just sent a message recently, if not keep track of their message
     if(!msgRecently.has(message.author.id)){ 

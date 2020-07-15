@@ -1,4 +1,4 @@
-/* This module toggles the bot's ability to detect spam messages */
+/* This module toggles the bot's ability to detect spam messages 
 const BaseCommand = require("../../utilities/structures/BaseCommand");
 
 module.exports = class ToggleAntiSpamCommand extends BaseCommand{
@@ -15,5 +15,5 @@ module.exports = class ToggleAntiSpamCommand extends BaseCommand{
         else{ reply += `${bot.user.username} will now enable the antispam module (*´꒳\`\\*)`; }
         message.channel.send(`**${message.author.username}**-sama, ${reply}`);
     } // end of run
-}; // end of module.exports
+}; // end of module.exports */
 

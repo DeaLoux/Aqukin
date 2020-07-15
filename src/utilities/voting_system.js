@@ -35,10 +35,10 @@ async function voteConstruct (bot, message, player, command){
     else {
         ++votingSysVar.voteCount; // increase the vote count
         votingSysVar.voters.set(message.author.id, message.author) // the author has now voted via command
-        votingSysVar.votesRequired = Math.ceil(members.size * .6) - votingSysVar.voteCount;
+        votingSysVar.votesRequired = Math.ceil(members.size * .6);
         
         // Checks if more vote(s) is required
-        if(votingSysVar.votesRequired > 0){  
+        if(votingSysVar.votesRequired > votingSysVar.voteCount){  
             // contruct and send an embed asking the members to vote
             const embed = new MessageEmbed()
                 .setTitle(`Please react if you would also like to \`${command.description}\``)
@@ -54,10 +54,10 @@ async function voteConstruct (bot, message, player, command){
                     message.channel.send(`**${user.username}**-sama, ${bot.user.username} has already acknowledged your vote to \`${command.description}\`, please wait for other(s) to vote (￣ ￣ |||)`);
                     return false;
                 }
-                const memPermissionCheck = message.guild.members.cache.get(user.id);
                 const { channel } = message.guild.members.cache.get(user.id).voice;
                 if (!channel) { return false; }
                 if (channel.id === player.connection.channel.id) {  // checks if the voters are in the same voice channel with the bot
+                    const memPermissionCheck = message.guild.members.cache.get(user.id);
                     if(memPermissionCheck.hasPermission("ADMINISTRATOR")){
                         votingSysVar.voteReached = true;
                         return ["⚓"].includes(reaction.emoji.name); 
@@ -78,8 +78,8 @@ async function voteConstruct (bot, message, player, command){
                     const reactionVotes = await reactions.get("⚓").users.cache.filter(u => !u.bot);
                     votingSysVar.voteCount += reactionVotes.size; // register the reactions count into the vote count
                 
-                    // checks after the reaction vote
-                    if(votingSysVar.votesRequired > 0){ 
+                    // checks if the vote is reached after the reaction vote
+                    if(votingSysVar.voteCount >= votingSysVar.votesRequired){ 
                         if(votingSysVar) { await voteCmds.delete(command.name); }
                         votingSysVar.voteReached = true; 
                     }

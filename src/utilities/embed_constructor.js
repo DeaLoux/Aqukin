@@ -10,7 +10,7 @@ async function musicEmbed(bot, player, track){
         .setThumbnail(thumbnails[Math.floor(Math.random() * Math.floor(thumbnails.length))])
         .setTitle("⚓ Now Playing ~ (˘ ▽ ˘ ~) ⚓")
         .addFields({ name: "Title", value: `[${track.title}](${track.url})` },
-                   { name: "🔞Volume", value: `${player.connection.dispatcher.volume*100}`, inline: true },
+                   { name: "🔞Volume", value: `${Math.floor(player.connection.dispatcher.volume*100)}`, inline: true },
                    { name: "Track Length", value: await formatLength(track.duration), inline: true },
                    { name: "Queue Size", value: `${player.queue.length}`, inline: true },
                    { name: "⏸️Paused", value: await convertBoolean(player.connection.dispatcher.paused), inline: true },
@@ -32,7 +32,7 @@ async function marketEmbed(bot, message, stocks){
     const embed = new MessageEmbed()
         .setColor(0x1DE2FE)
         .setThumbnail(thumbnails[Math.floor(Math.random() * Math.floor(thumbnails.length))])
-        .setTitle(`${message.guild.name} Stock Market `)
+        .setTitle(`${message.guild.name} Stock Market Σ (° ロ °)`)
         .addFields({ name: "Your Balance", value: `$${bot.currency.getBalance(message.author.id)}`, inline: true },
                    { name: "Economy Role", value: `${user.econrole}`, inline: true },
                    { name: "Market", value: `${description}` },)
