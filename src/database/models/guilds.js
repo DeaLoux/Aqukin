@@ -16,12 +16,12 @@ module.exports = (sequelize, DataTypes) => {
 
 		reply: {
 			type: DataTypes.BOOLEAN,
-			defaultValue: FALSE,
+			defaultValue: '0',
 		},
 
 		react: {
 			type: DataTypes.BOOLEAN,
-			defaultValue: FALSE,
+			defaultValue: '0',
 		},
 	}, {
 		timestamps: false,
