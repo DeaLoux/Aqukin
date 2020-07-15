@@ -9,9 +9,9 @@ async function alive(bot){
 		response.sendStatus(200);
 	});
 		  
-	let PORT = process.env.PORT || 8080;
-	app.listen(PORT, () => {
-    	console.log(`${bot.user.username} is running on port ${ PORT }`);
+	bot.port = process.env.PORT || 8080;
+	app.listen(bot.port, () => {
+    	console.log(`${bot.user.username} is running on port ${ bot.port }`);
 	});
 
 	setInterval(() => { http.get(`http://${process.env.PROJECT_DOMAIN}.herokuapp.com/`); }, 280000);

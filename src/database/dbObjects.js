@@ -14,8 +14,8 @@ const sequelize = new Sequelize("database", "username", "password", {
 const sequelize = new Sequelize(process.env.HEROKU_POSTGRESQL_BRONZE_URL, {
 	dialect:  "postgres",
 	protocol: "postgres",
-	port:     match[4],
-	host:     match[3],
+	port:     bot.port,
+	host:     process.env.HOST,
 	logging:   false
 }); 
 
