@@ -27,12 +27,11 @@ module.exports = class LoopTrackCommand extends BaseCommand{
                     
         // Update the currently playing embed
         const embed = await musicEmbed(para.bot, player, player.queue[0])
-        try{
-            await player.sentMessage.edit(embed); // send the embed to inform about the now playing track
-        } catch(err) {
-            console.log("Recreating the deleted music embed", err);
+        await player.sentMessage.edit(embed) // send the embed to inform about the now playing track
+            .catch(async err => {
+            //console.log("Recreating the deleted music embed", err);
             player.sentMessage = await player.textChannel.send(embed);
-        }
+        });
     } // end of run
 }; // end of module.exports 
 

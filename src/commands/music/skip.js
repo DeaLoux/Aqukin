@@ -17,7 +17,7 @@ module.exports = class SkipCommand extends BaseCommand{
 
         try {
             await player.connection.dispatcher.end();
-            message.channel.send(`**${message.author.username}**-sama, ${para.bot.user.username} has skipped track ヾ (⌐ ■ _ ■) ノ ♪ **${player.queue[0].title}** `);    
+            message.channel.send(`**${message.author.username}**-sama, ${para.bot.user.username} has skipped track ヾ (⌐ ■ _ ■) ノ ♪ \`${player.queue[0].title}\``);    
         } catch(err) { console.log(err); }
     } // end of run
 }; // end of module.exports

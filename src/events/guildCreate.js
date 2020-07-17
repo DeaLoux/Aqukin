@@ -27,13 +27,11 @@ module.exports = class GuildCreateEvent extends BaseEvent {
             .setImage("https://media1.tenor.com/images/c0e9bb7fbe7ae685ca2c7aa214e82cdc/tenor.gif?itemid=17166292")
             .setFooter("Vive La Résistance le Hololive ٩(｡•ω•｡*)و");
 
-        try{
-            const channel = await guild.channels.create(`Haachama's cooking`, { 
+        guild.channels.create(`YAGOO's Dream`, { 
                 reason: `User guide channel`,
-            });
-            await channel.send(`Dear masters of **${guild.name}**`, embed);
+        }).then((channel) => {
+            channel.send(`Konaqua~ masters of **${guild.name}**`, embed);
             console.log(`Added to -> ${guild.name}`);
-        }
-        catch(err) { console.log(err); }
+        })
     } // end of run
 } // end of module.exports

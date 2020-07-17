@@ -8,17 +8,22 @@ module.exports = class ToggleReactionCommand extends BaseCommand{
         // shortcut variables
         const { message, bot } = para;
 
-        const emojiList = Array.from(message.guild.emojis.cache.map(e => e.id.toString()));
-        if(emojiList.length === 0){
-            return message.channel.send(`**${message.author.username}**-sama, you need to have custom emojis so ${bot.user.username} can react (； ￣Д￣)`);
+        try{
+            const emojiList = Array.from(message.guild.emojis.cache.map(e => e.id.toString()));
+            if(emojiList.length === 0){
+                return message.channel.send(`**${message.author.username}**-sama, you need to have custom emojis so ${bot.user.username} can react (； ￣Д￣)`);
+            }
+
+            const settings = await bot.settings.toggleReact(message.guild.id);
+
+            let reply = "";
+            if(!settings.react){ reply += `${bot.user.username} has disabled the reaction module (* ￣ ▽ ￣) b`; }
+            else{ reply += `${bot.user.username} will now enable the reaction module (ﾉ ◕ ヮ ◕) ﾉ *: ･ ﾟ ✧`; }
+            message.channel.send(`**${message.author.username}**-sama, ${reply}`);
+        } 
+        catch(err){
+            console.log(err);
         }
-
-        const settings = await bot.settings.toggleReact(message.guild.id);
-
-        let reply = "";
-        if(!settings.react){ reply += `${bot.user.username} has disabled the reaction module (* ￣ ▽ ￣) b`; }
-        else{ reply += `${bot.user.username} will now enable the reaction module (ﾉ ◕ ヮ ◕) ﾉ *: ･ ﾟ ✧`; }
-        message.channel.send(`**${message.author.username}**-sama, ${reply}`);
     } // end of run
 }; // end of module.exports
 

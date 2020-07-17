@@ -17,7 +17,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 	port:     process.env.PORT,
 	host:     process.env.HOST,
 	logging:   false
-}); 
+});
 
 const Users = require("../database/models/users")(sequelize, Sequelize.DataTypes);
 const Guilds = require("../database/models/guilds")(sequelize, Sequelize.DataTypes);

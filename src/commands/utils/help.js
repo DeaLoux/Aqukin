@@ -17,7 +17,9 @@ module.exports = class HelpCommand extends BaseCommand{
             const commandName = para.args[0].toLowerCase();
             const command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
             // checks if there's a command with the given argurment, if not return a message to inform the author
-            if(!command) { return channel.send(`**${author.username}**-sama, ${bot.user.username} can't find any command with that name ლ (ಠ_ಠ ლ), try \`${para.prefix}help\` if you need the commands list`); }
+            if(!command) { 
+                return channel.send(`**${author.username}**-sama, ${bot.user.username} can't find any command with that name ლ (ಠ_ಠ ლ), try \`${para.prefix}help\` if you need the commands list`); 
+            }
 
             // construct the embed
             const cmdInfoEmbed = new MessageEmbed()
@@ -71,7 +73,6 @@ module.exports = class HelpCommand extends BaseCommand{
                     //{ name: "Current cleantext number", value: settingsCmds, inline: true }
                 );
             }
-            
             channel.send(`**${author.username}**-sama, here's the list of ${bot.user.username}'s commands (つ ≧ ▽ ≦) つ`, helpEmbed); // send out the embed
         } // end of else
     } // end of run

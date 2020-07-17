@@ -14,9 +14,7 @@ module.exports = class DisconnectCommand extends BaseCommand{
         const voteReached = await voteConstruct(para.bot, para.message, player, para.command);
         if(!voteReached) { return; }
 
-        try {
-            await player.connection.disconnect();  
-        } catch(err) { console.log(err); }
+        await player.connection.disconnect();
     } // end of run
 }; // end of module.exports
 

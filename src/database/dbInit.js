@@ -2,7 +2,7 @@
 require("dotenv").config();
 const Sequelize = require("sequelize");
 
-/* local 
+/* local
 const sequelize = new Sequelize("database", "username", "password", {
 	host: "localhost",
 	dialect: "sqlite",

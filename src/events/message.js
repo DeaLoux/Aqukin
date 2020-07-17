@@ -56,9 +56,10 @@ module.exports = class MessageEvent extends BaseEvent {
         } 
 
         // try executing the command and catch any errors
-        try{
-            await command.run(para);
-            await bot.mentionCmd.mentioned.delete(message.guild.id);
-        } catch (err){ console.log(err); }
+        command.run(para).catch((error) => {
+            console.log(error); 
+            message.channel.send(`**${message.author.username}**-sama, \`${error}\``);
+        });
+        await bot.mentionCmd.mentioned.delete(message.guild.id);
     } // end of run
 }// end of module.exports
