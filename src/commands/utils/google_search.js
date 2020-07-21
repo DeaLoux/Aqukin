@@ -1,4 +1,4 @@
-/* This module searches google for image(s) and sends them base on the given keyword */
+/* This module searches google for image(s) and sends them base on the given keyword 
 require("dotenv").config();
 const { google } = require("googleapis");
 const customSearch = google.customsearch("v1");
@@ -21,10 +21,10 @@ module.exports = class SendCommand extends BaseCommand{
             searchType: "image",
              num: 5
         }).then((results) => {
-            if(!results) { message.channel.send(`Nihao **${message.author.username}**, stop searching for porn pls`); }
+            if(!results) { message.channel.send(`Nihao **${message.author.username}**-sama, stop searching for porn pls`); }
 
             const imageUrl = results.data.items[Math.floor(Math.random() * (results.data.items.length))].link;
             message.channel.send(`**${message.author.username}**-sama, here's your search result`, new MessageAttachment(imageUrl));     
         }).catch(err => console.log(err));
     } // end of run
-}; // end of module.exports 
+}; // end of module.exports */
