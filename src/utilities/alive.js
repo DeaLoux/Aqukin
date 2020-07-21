@@ -6,7 +6,6 @@ const app = express();
 
 async function alive(bot){
 	app.get("/", (request, response) => {
-		// console.log(Date.now() + " Ping Received");
 		response.sendStatus(200);
 	});
 		  
@@ -15,7 +14,7 @@ async function alive(bot){
     	console.log(`${bot.user.username} is running on port ${ PORT }`);
 	});
 
-	setInterval(() => { http.get(`http://${process.env.PROJECT_DOMAIN}.herokuapp.com/`); }, 280000);
+	setInterval(() => { http.get(process.env.PROJECT_DOMAIN); }, 280000);
 }
 
 module.exports = { alive };

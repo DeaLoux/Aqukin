@@ -1,6 +1,5 @@
 /* This module contruct the voting system for an command */
 const { MessageEmbed, Collection } = require("discord.js");
-const { response } = require("express");
 
 async function voteConstruct (bot, message, player, command){
     // checks if the command require voting
@@ -36,7 +35,7 @@ async function voteConstruct (bot, message, player, command){
     else {
         ++votingSysVar.voteCount; // increase the vote count
         votingSysVar.voters.set(message.author.id, message.author) // the author has now voted via command
-        votingSysVar.votesRequired = Math.ceil(members.size * .6);
+        votingSysVar.votesRequired = Math.ceil(members.size * 0.6);
         
         // Checks if more vote(s) is required
         if(votingSysVar.votesRequired > votingSysVar.voteCount){  
@@ -53,42 +52,42 @@ async function voteConstruct (bot, message, player, command){
                 // members reactions filter
                 const filter = (reaction, user) => {                    
                     // checks if the user has already voted
-                    if (votingSysVar.voters.has(user.id)){ 
+                    if(votingSysVar.voters.has(user.id)){
                         message.channel.send(`**${user.username}**-sama, you have already voted to \`${command.description}\`, please wait for other(s) to vote (￣ ￣ |||)`);
-                        return false;
-                    }
+                        return false; 
+                    }; 
 
                     // checks if the voters are in the same voice channel with the bot
                     const { channel } = message.guild.members.cache.get(user.id).voice;
                     if (!channel) { return false; }
                     if (channel.id === player.connection.channel.id) {  
-                    
                         // checks if the voters has administrative permission
-                        const memPermissionCheck = message.guild.members.cache.get(user.id);
-                        if(!memPermissionCheck.hasPermission("ADMINISTRATOR")){
-                            votingSysVar.voteReached = true;
-                            return ["⚓"].includes(reaction.emoji.name); 
-                        }
-                        else{
-                            message.channel.send(`**${user.username}**-sama, ${bot.user.username} has acknowledge your vote to \`${command.description}\` (* ￣ ▽ ￣) b`);
-                            votingSysVar.voters.set(user.id, user); // the user has now voted via emote reation
-                            return ["⚓"].includes(reaction.emoji.name); 
-                        }
+                        message.guild.members.fetch(user.id).then(async (userPerm) => {
+                            if(userPerm.hasPermission("ADMINISTRATOR")){
+                                votingSysVar.voteReached = true;
+                                return ["⚓"].includes(reaction.emoji.name); 
+                            }
+                            else{
+                                message.channel.send(`**${user.username}**-sama, ${bot.user.username} has acknowledge your vote to \`${command.description}\` (* ￣ ▽ ￣) b`);
+                                await votingSysVar.voters.set(user.id, user); // the user has now voted via emote reation
+                                return ["⚓"].includes(reaction.emoji.name); 
+                            }
+                        });
                     }
                     return false;
                 } // end of reaction filter
                 
                 await msg.awaitReactions(filter, { max: votingSysVar.votesRequired, time: 24000, errors: ["time"] })
                 .then(async (reactions) => {
-                    votingSysVar.voteCount += await reactions.get("⚓").users.cache.filter(u => !u.bot).size; // register the reactions count into the vote count
+                    votingSysVar.voteCount += await reactions.get("⚓").users.cache.filter(u => { !u.bot && !votingSysVar.voters.has(u.id) }).size; // register the reactions count into the vote count
+
+                    // checks if the vote is reached after the reaction vote
+                    if(votingSysVar.voteCount >= votingSysVar.votesRequired){ 
+                        if(votingSysVar) { await voteCmds.delete(command.name); }
+                        votingSysVar.voteReached = true; 
+                    }
                 })
                 .catch(err => console.log(err));
-
-                // checks if the vote is reached after the reaction vote
-                if(votingSysVar.voteCount >= votingSysVar.votesRequired){ 
-                    if(votingSysVar) { await voteCmds.delete(command.name); }
-                    votingSysVar.voteReached = true; 
-                }
 
                 await msg.delete();
             })
