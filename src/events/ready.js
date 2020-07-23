@@ -34,7 +34,7 @@ module.exports = class ReadyEvent extends BaseEvent {
 		});
 
 		// activities
-		const activities = ["Apex Legends", "Minecraft", "Super Mario Bros. 3", "Sekiro: Shadows Die Twice", "Dark Souls", "Super Mario Maker 2", "Super Mario Bros.", "Final Fantasy VII Remake", "Super Smash Bros. Ultimate", "Dark Souls III", "Super Mario Bros. 2", "Ring Fit Adventure"];
+		const activities = ["Apex Legends", "Minecraft", "Super Mario Bros. 3", "Sekiro: Shadows Die Twice", "Dark Souls", "Super Mario Maker 2", "Getting Over It", "Super Mario Bros.", "Final Fantasy VII Remake", "Super Smash Bros. Ultimate", "Dark Souls III", "Super Mario Bros. 2", "Ring Fit Adventure"];
 		setInterval(() => {
 			bot.user.setActivity(activities[Math.floor(Math.random() * Math.floor(activities.length))], { type: "PLAYING" }); }, 7200000);
 		console.log(`${bot.user.username}, your diamond ninja combat baka maid is now ready at your service, master!`);

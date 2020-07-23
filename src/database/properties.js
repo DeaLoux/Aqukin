@@ -36,6 +36,15 @@ async function settings(bot){
             return guild.save();
         },
     });
+
+    // toggle react
+    Reflect.defineProperty(bot.settings, "storeEmojis", {
+        value: async function storeEmojis(id, emojis) {
+            const guild = bot.settings.get(id);
+            guild.emojis = emojis;
+            return guild.save();
+        },
+    });
     
     // get the settings
     Reflect.defineProperty(bot.settings, "getSettings", {

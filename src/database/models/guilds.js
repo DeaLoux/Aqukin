@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.BOOLEAN,
 			defaultValue: '0',
 		},
+
+		emojis: {
+			type: DataTypes.ARRAY(DataTypes.STRING)
+		}
 	}, {
 		timestamps: false,
 	});

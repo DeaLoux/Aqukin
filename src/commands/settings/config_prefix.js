@@ -8,9 +8,11 @@ module.exports = class ConfigurePrefixCommand extends BaseCommand{
         // shortcut variables
         const { message, bot } = para;
 
-        const settings = await bot.settings.setPrefix(message.guild.id, para.args[0]);
-        
-        message.channel.send(`**${message.author.username}**-sama, ${bot.user.username} has changed the current prefix to \`${settings.prefix}\` ヽ (o ＾ ▽ ＾ o) ノ`);
+        bot.settings.setPrefix(message.guild.id, para.args[0])
+            .then((settings) => {
+                message.channel.send(`**${message.author.username}**-sama, ${bot.user.username} has changed the current prefix to \`${settings.prefix}\` ヽ (o ＾ ▽ ＾ o) ノ`);
+            })
+            .catch((err) => console.log(err));
     } // end of run
 }; // end of module.exports
 

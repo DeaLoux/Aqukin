@@ -8,17 +8,15 @@ module.exports = class ToggleMessageReplyCommand extends BaseCommand{
         // shortcut variables
         const { message, bot } = para;
 
-        try{
-            const settings = await bot.settings.toggleReply(message.guild.id);
+        bot.settings.toggleReply(message.guild.id)
+            .then((settings) => {
+                let reply = "";
+                if(!settings.react){ reply += `${bot.user.username} has disabled the message reply module (* ￣ ▽ ￣) b`; }
+                else{ reply += `${bot.user.username} will now enable the message reply module (*´꒳\`\\*)`; }
+                message.channel.send(`**${message.author.username}**-sama, ${reply}`);
+            })
+            .catch((err) => { console.log(err); });
 
-            let reply = "";
-            if(!settings.reply){ reply += `${bot.user.username} has disabled the message reply module (* ￣ ▽ ￣) b`; }
-            else{ reply += `${bot.user.username} will now enable the message reply module (*´꒳\`\\*)`; }
-            message.channel.send(`**${message.author.username}**-sama, ${reply}`);
-        } 
-        catch(err){
-            console.log(err);
-        }
     } // end of run
 }; // end of module.exports
 
