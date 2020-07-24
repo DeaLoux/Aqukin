@@ -24,7 +24,7 @@ module.exports = class ShuffleQueueCommand extends BaseCommand {
 
 async function shuffle(queue){
     for(let i = queue.length-1; i>0; i--){
-        let j = Math.floor(Math.random() * (i + 1));
+        let j = 0;
         while(j===0){
             j = Math.floor(Math.random() * (i + 1));
         }

@@ -1,7 +1,7 @@
 {
   "name": "aqukin",
   "version": "1.12.0",
-  "description": "Diamond ninja combat baka maid at your service",
+  "description": "A bot that was created based on a Virtual Youtuber known as **Minato Aqua**",
   "main": "aqukin.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,7 +10,7 @@
     "db": "node ./src/database/dbInit.js"
   },
   "author": "DeaLoux",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@discordjs/opus": "^0.3.2",
     "discord.js": "^12.2.0",
@@ -21,16 +21,13 @@
     "http": "0.0.1-security",
     "line-reader": "^0.4.0",
     "ms": "^2.1.2",
-    "mysql": "^2.18.1",
     "pg": "^8.3.0",
     "sequelize": "^6.3.3",
     "ytdl-core": "^3.1.2",
     "ytpl": "^0.2.0",
-    "ytsr": "^0.1.16"
+    "ytsr": "^0.1.18"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4",
-    "sequelize-cli": "^6.2.0",
-    "sqlite3": "^5.0.0"
+    "nodemon": "^2.0.4"
   }
 }
